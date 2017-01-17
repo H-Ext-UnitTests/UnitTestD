@@ -86,7 +86,7 @@ static const wchar[] Unit_Test = "Unit Test";
 static const wchar[] unit_test = "unit test";
 
 //variant test section
-static const wchar[] variantFormatExpected = "慁 1.000000 2.000002 1 25 50 4294967295 2147483647 2147483647 4294967295 aA";
+static const wchar[] variantFormatExpected = "Aa 1.000000 2.000002 1 25 50 4294967295 2147483647 2147483647 4294967295 aA";
 static const wchar[] variantFormat = "{0:s} {2:f} {3:f} {4:hhd} {5:hd} {6:hu} {8:u} {7:d} {9:ld} {10:lu} {1:s}";
 }
 //ICIniFile test section
