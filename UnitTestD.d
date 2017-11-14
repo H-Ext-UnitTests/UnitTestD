@@ -187,30 +187,30 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
             boolean = pIUtil.m_shiftStrW(utilMemStrW, 1, 3, 1, 0);
             if (boolean != e_boolean.TRUE)
                 throw new ExceptionAPI(1);
-            if (!pIUtil.m_findSubStrFirstW(MatterW.ptr, utilMemStrW))
+            if (!pIUtil.m_findSubStrFirstW(utilMemStrW, MatterW.ptr))
                 throw new ExceptionAPI(1);
-            if (pIUtil.m_findSubStrFirstW(MattarW.ptr, utilMemStrW))
+            if (pIUtil.m_findSubStrFirstW(utilMemStrW, MattarW.ptr))
                 throw new ExceptionAPI(1);
             boolean = pIUtil.m_shiftStrW(utilMemStrW, 1, 1, 3, 1);
             if (boolean != e_boolean.TRUE)
                 throw new ExceptionAPI(1);
-            if (!pIUtil.m_findSubStrFirstW(MattarW.ptr, utilMemStrW))
+            if (!pIUtil.m_findSubStrFirstW(utilMemStrW, MattarW.ptr))
                 throw new ExceptionAPI(1);
-            if (pIUtil.m_findSubStrFirstW(MatterW.ptr, utilMemStrW))
+            if (pIUtil.m_findSubStrFirstW(utilMemStrW, MatterW.ptr))
                 throw new ExceptionAPI(1);
             boolean = pIUtil.m_shiftStrA(utilMemStrA, 1, 3, 1, 0);
             if (boolean != e_boolean.TRUE)
                 throw new ExceptionAPI(1);
-            if (!pIUtil.m_findSubStrFirstA(MatterA.ptr, utilMemStrA))
+            if (!pIUtil.m_findSubStrFirstA(utilMemStrA, MatterA.ptr))
                 throw new ExceptionAPI(1);
-            if (pIUtil.m_findSubStrFirstA(MattarA.ptr, utilMemStrA))
+            if (pIUtil.m_findSubStrFirstA(utilMemStrA, MattarA.ptr))
                 throw new ExceptionAPI(1);
             boolean = pIUtil.m_shiftStrA(utilMemStrA, 1, 1, 3, 1);
             if (boolean != e_boolean.TRUE)
                 throw new ExceptionAPI(1);
-            if (!pIUtil.m_findSubStrFirstA(MattarA.ptr, utilMemStrA))
+            if (!pIUtil.m_findSubStrFirstA(utilMemStrA, MattarA.ptr))
                 throw new ExceptionAPI(1);
-            if (pIUtil.m_findSubStrFirstA(MatterA.ptr, utilMemStrA))
+            if (pIUtil.m_findSubStrFirstA(utilMemStrA, MatterA.ptr))
                 throw new ExceptionAPI(1);
 
             utilMemStrW[0] = 0;
