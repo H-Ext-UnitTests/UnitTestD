@@ -668,11 +668,11 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
                 throw new ExceptionAPI(6);
 
             PlayerInfo plITest, plITest2;
-            if (pIPlayer.m_get_m_index(2, &plITest))
+            if (pIPlayer.m_get_m_index(2, &plITest, true))
                 throw new ExceptionAPI(6);
-            if (pIPlayer.m_get_m_index(1, &plITest))
+            if (pIPlayer.m_get_m_index(1, &plITest, true))
                 throw new ExceptionAPI(6);
-            if (!pIPlayer.m_get_m_index(0, &plITest))
+            if (!pIPlayer.m_get_m_index(0, &plITest, true))
                 throw new ExceptionAPI(6);
             if (pIPlayer.m_get_id(200, &plITest2))
                 throw new ExceptionAPI(6);
@@ -787,7 +787,7 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
         }
         static if (__traits(compiles, EXT_IADMIN)) {
             PlayerInfo plIMockUp;
-            if (!pIPlayer.m_get_m_index(0, &plIMockUp))
+            if (!pIPlayer.m_get_m_index(0, &plIMockUp, true))
                 throw new ExceptionAPI(6);
 
             pIAdmin = getIAdmin(hash);
