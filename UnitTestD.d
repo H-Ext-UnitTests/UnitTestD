@@ -599,6 +599,10 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
             if (!pICommand.m_load_from_file(hash, eaoLoadFileStr.ptr, plINull, MSG_PROTOCOL.MP_RCON))
                 throw new ExceptionAPI(4);
 
+            // Proper remove command when done testing.
+            if (!pICommand.m_delete(hash, &eao_testExecute, eaoTestExecuteStr.ptr))
+                throw new ExceptionAPI(4);
+
             MessageBoxA(null, "ICommand API has passed unit test.", "PASSED - ICommand", MB_OK | MB_ICONINFORMATION);
         }
         static if (__traits(compiles, EXT_IOBJECT)) {
@@ -911,7 +915,7 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
             * m_dispatch_player
             */
             chatData d;
-            d.msg_ptr = cast(wchar*)playerChatTest;
+            d.msg_ptr = playerChatTest.ptr;
             d.player = 0;
             d.type = chatType.TEAM;
             // Gotta pass a pointer to the chatData struct
@@ -928,7 +932,7 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
             /*
             * m_dispatch_global
             */
-            d.msg_ptr = cast(wchar*)globalChatTest.ptr;
+            d.msg_ptr = globalChatTest.ptr;
             d.type = chatType.GLOBAL;
             d_ptr = cast(uint)&d;
             packetBuffer = cast(ubyte*)malloc(4096 + 2 * globalChatTest.length);
@@ -1026,7 +1030,7 @@ export extern(C) void EXTOnEAOUnload() {
 }
 
 static if (__traits(compiles, EXT_HKTIMER)) {
-export extern(C) void EXTOnTimerExecute(uint id) {
+export extern(C) bool EXTOnTimerExecute(uint id, uint count) {
     static if (__traits(compiles, ITIMER_LOOP_CHECK)) {
     if (TimerIDLoop == id) {
         DWORD tempTimerTickLoop = GetTickCount();
@@ -1034,8 +1038,7 @@ export extern(C) void EXTOnTimerExecute(uint id) {
         VARIANTulong(&var, tempTimerTickLoop - TimerTickLoop);
         TimerTickLoop = tempTimerTickLoop;
         pIPlayer.m_send_custom_message(MF_INFO, MP_RCON, &plINull, "{0:d} millisecond(s).", 1, &var);
-        TimerIDLoop = pITimer.m_add(EAOhashID, 0, 30); //1 second
-        return; //This is needed to "mock up" else to avoid force failure below.
+        return true; //This is needed to "mock up" else to avoid force failure below and tell H-Ext to repeat timer.
     } //else //Compiler complaint about incomplete statement.
     }
     if (TimerID[0] == id) {
@@ -1075,6 +1078,7 @@ export extern(C) void EXTOnTimerExecute(uint id) {
     failedITimer:
         MessageBoxA(NULL, "ITimer API has failed unit test.", "ERROR - ITimer", MB_OK | MB_ICONERROR);
     }
+    return false; //Tell H-Ext not to repeat timer.
 }
 export extern(C) void EXTOnTimerCancel(uint id) {
     if (TimerID[0] == id) {
