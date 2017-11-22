@@ -430,26 +430,26 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
             if (pICInifile.m_section_exist(pICInifile, EXTPluginInfo.sectors.sect_name5.ptr))
                 throw new ExceptionAPI(3);
 
-            if (pICInifile.m_key_exist(pICInifile, str1_0.ptr, EXTPluginInfo.sectors.sect_name1.ptr))
+            if (pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name1.ptr, str1_0.ptr))
                 throw new ExceptionAPI(3);
-            if (pICInifile.m_key_exist(pICInifile, str1_1.ptr, EXTPluginInfo.sectors.sect_name2.ptr))
+            if (pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name2.ptr, str1_1.ptr))
                 throw new ExceptionAPI(3);
-            if (pICInifile.m_key_exist(pICInifile, str1_0.ptr, EXTPluginInfo.sectors.sect_name3.ptr))
+            if (pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name3.ptr, str1_0.ptr))
                 throw new ExceptionAPI(3);
-            if (pICInifile.m_key_exist(pICInifile, str1_2.ptr, EXTPluginInfo.sectors.sect_name4.ptr))
+            if (pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name4.ptr, str1_2.ptr))
                 throw new ExceptionAPI(3);
-            if (pICInifile.m_key_exist(pICInifile, str1_3.ptr, EXTPluginInfo.sectors.sect_name5.ptr))
+            if (pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name5.ptr, str1_3.ptr))
                 throw new ExceptionAPI(3);
 
-            if (!pICInifile.m_value_set(pICInifile, str1_0.ptr, firstUnitTestCStr.ptr, EXTPluginInfo.sectors.sect_name1.ptr))
+            if (!pICInifile.m_value_set(pICInifile, EXTPluginInfo.sectors.sect_name1.ptr, str1_0.ptr, firstUnitTestCStr.ptr))
                 throw new ExceptionAPI(3);
-            if (!pICInifile.m_value_set(pICInifile, str1_1.ptr, firstUnitTestCStr.ptr, EXTPluginInfo.sectors.sect_name2.ptr))
+            if (!pICInifile.m_value_set(pICInifile, EXTPluginInfo.sectors.sect_name2.ptr, str1_1.ptr, firstUnitTestCStr.ptr))
                 throw new ExceptionAPI(3);
-            if (!pICInifile.m_value_set(pICInifile, str1_0.ptr, firstUnitTestCStr.ptr, EXTPluginInfo.sectors.sect_name3.ptr))
+            if (!pICInifile.m_value_set(pICInifile, EXTPluginInfo.sectors.sect_name3.ptr, str1_0.ptr, firstUnitTestCStr.ptr))
                 throw new ExceptionAPI(3);
-            if (pICInifile.m_value_set(pICInifile, str1_2.ptr, firstUnitTestCStr.ptr, EXTPluginInfo.sectors.sect_name4.ptr))
+            if (pICInifile.m_value_set(pICInifile, str1_2.ptr, EXTPluginInfo.sectors.sect_name4.ptr, firstUnitTestCStr.ptr))
                 throw new ExceptionAPI(3);
-            if (pICInifile.m_value_set(pICInifile, str1_3.ptr, firstUnitTestCStr.ptr, EXTPluginInfo.sectors.sect_name5.ptr))
+            if (pICInifile.m_value_set(pICInifile, str1_3.ptr, EXTPluginInfo.sectors.sect_name5.ptr, firstUnitTestCStr.ptr))
                 throw new ExceptionAPI(3);
             retCode++;
             switch (retCode) {
@@ -495,36 +495,36 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
                 throw new ExceptionAPI(3);
 
 
-            if (!pICInifile.m_key_exist(pICInifile, str1_0.ptr, EXTPluginInfo.sectors.sect_name1.ptr))
+            if (!pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name1.ptr, str1_0.ptr))
                 throw new ExceptionAPI(3);
 
-            if (!pICInifile.m_key_exist(pICInifile, str1_1.ptr, EXTPluginInfo.sectors.sect_name2.ptr))
+            if (!pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name2.ptr, str1_1.ptr))
                 throw new ExceptionAPI(3);
-            if (pICInifile.m_key_exist(pICInifile, str1_0.ptr, EXTPluginInfo.sectors.sect_name3.ptr))
+            if (pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name3.ptr, str1_0.ptr))
                 throw new ExceptionAPI(3);
-            if (pICInifile.m_key_exist(pICInifile, str1_2.ptr, EXTPluginInfo.sectors.sect_name4.ptr))
+            if (pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name4.ptr, str1_2.ptr))
                 throw new ExceptionAPI(3);
-            if (pICInifile.m_key_exist(pICInifile, str1_3.ptr, EXTPluginInfo.sectors.sect_name5.ptr))
+            if (pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name5.ptr, str1_3.ptr))
                 throw new ExceptionAPI(3);
 
 
-            if (!pICInifile.m_value_set(pICInifile, str1_0.ptr, firstUnitTestCStr.ptr, EXTPluginInfo.sectors.sect_name1.ptr))
+            if (!pICInifile.m_value_set(pICInifile, EXTPluginInfo.sectors.sect_name1.ptr, str1_0.ptr, firstUnitTestCStr.ptr))
                 throw new ExceptionAPI(3);
-            if (!pICInifile.m_key_exist(pICInifile, str1_0.ptr, EXTPluginInfo.sectors.sect_name1.ptr))
+            if (!pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name1.ptr, str1_0.ptr))
                 throw new ExceptionAPI(3);
 
             if (!pICInifile.m_save(pICInifile))
                 throw new ExceptionAPI(3);
 
-            if (!pICInifile.m_key_delete(pICInifile, str1_0.ptr, EXTPluginInfo.sectors.sect_name1.ptr))
+            if (!pICInifile.m_key_delete(pICInifile, EXTPluginInfo.sectors.sect_name1.ptr, str1_0.ptr))
                 throw new ExceptionAPI(3);
-            if (pICInifile.m_key_exist(pICInifile, str1_0.ptr, EXTPluginInfo.sectors.sect_name1.ptr))
+            if (pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name1.ptr, str1_0.ptr))
                 throw new ExceptionAPI(3);
 
             if (!pICInifile.m_load(pICInifile))
                 throw new ExceptionAPI(3);
 
-            if (!pICInifile.m_key_exist(pICInifile, str1_0.ptr, EXTPluginInfo.sectors.sect_name1.ptr))
+            if (!pICInifile.m_key_exist(pICInifile, EXTPluginInfo.sectors.sect_name1.ptr, str1_0.ptr))
                 throw new ExceptionAPI(3);
 
             retCode = 0;
@@ -543,15 +543,67 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
 
             //C way
             //retCode++; //Is not required.
-            do {
-                retCode--;
-                if (strPtrW[retCode] != iniFileDataStr[retCode])
-                    throw new ExceptionAPI(3);
-            } while (retCode);
+            if (!compareString(dStrPtrW, iniFileDataStr, retCode))
+                throw new ExceptionAPI(3);
 
+            // Begin 0.5.3.4 Feature
+            wchar[INIFILESECTIONMAX] section_name;
+            wchar[INIFILEKEYMAX] key_name;
+            wchar[INIFILEVALUEMAX] value_name;
+            uint ini_sec_count = pICInifile.m_section_count(pICInifile);
+            if (ini_sec_count != 3)
+                throw new ExceptionAPI(3);
+
+            uint ini_key_count;
+            // Section 0 test
+            if (!pICInifile.m_section_index(pICInifile, 0, section_name.ptr))
+                throw new ExceptionAPI(3);
+            if (!compareString(EXTPluginInfo.sectors.sect_name1, section_name, -1))
+                throw new ExceptionAPI(3);
+            ini_key_count = pICInifile.m_key_count(pICInifile, section_name.ptr);
+            if (ini_key_count != 1)
+                throw new ExceptionAPI(3);
+
+            // Section 0 key 0 test
+            if (!pICInifile.m_key_index(pICInifile, section_name.ptr, 0, key_name.ptr, value_name.ptr))
+                throw new ExceptionAPI(3);
+            if (!compareString(str1_0, key_name, -1))
+                throw new ExceptionAPI(3);
+            if (!compareString(firstUnitTestCStr, value_name, -1))
+                throw new ExceptionAPI(3);
+
+            // Section 1 test
+            if (!pICInifile.m_section_index(pICInifile, 1, section_name.ptr))
+                throw new ExceptionAPI(3);
+            if (!compareString(EXTPluginInfo.sectors.sect_name2, section_name, -1))
+                throw new ExceptionAPI(3);
+            ini_key_count = pICInifile.m_key_count(pICInifile, section_name.ptr);
+            if (ini_key_count != 1)
+                throw new ExceptionAPI(3);
+
+            // Section 1 key 0 test
+            if (!pICInifile.m_key_index(pICInifile, section_name.ptr, 0, key_name.ptr, value_name.ptr))
+                throw new ExceptionAPI(3);
+            if (!compareString(str1_1, key_name, -1))
+                throw new ExceptionAPI(3);
+            if (!compareString(firstUnitTestCStr, value_name, -1))
+                throw new ExceptionAPI(3);
+
+            // Section 2 test
+            if (!pICInifile.m_section_index(pICInifile, 2, section_name.ptr))
+                throw new ExceptionAPI(3);
+            if (!compareString(EXTPluginInfo.sectors.sect_name3, section_name, -1))
+                throw new ExceptionAPI(3);
+            ini_key_count = pICInifile.m_key_count(pICInifile, section_name.ptr);
+            if (ini_key_count != 0)
+                throw new ExceptionAPI(3);
+
+            // End 0.5.3.4 Feature
 
             if (!pICInifile.m_delete_file(pICInifile, iniFileStr.ptr))
                 throw new ExceptionAPI(3);
+
+            pICInifile.m_release(pICInifile);
 
             MessageBoxA(null, "ICIniFile API has passed unit test.", "PASSED - ICIniFile", MB_OK | MB_ICONINFORMATION);
         }
@@ -1023,10 +1075,7 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
 }
 
 export extern(C) void EXTOnEAOUnload() {
-    static if (__traits(compiles, EXT_ICINIFILE)) {
-        if (pICInifile)
-            pICInifile.m_release(pICInifile);
-    }
+    //TODO: Need to test something here?
 }
 
 static if (__traits(compiles, EXT_HKTIMER)) {
@@ -1089,4 +1138,22 @@ export extern(C) void EXTOnTimerCancel(uint id) {
         MessageBoxA(NULL, "ITimer API has failed unit test.", "ERROR - ITimer", MB_OK | MB_ICONERROR);
     }
 }
+}
+
+bool compareString(const wchar[] str1, const wchar[] str2, uint length) {
+    if (length == -1) {
+        length = 0;
+        while(str1[length] != 0 && str2[length] != 0) {
+            if (str1[length] != str2[length])
+                return false;
+            length++;
+        }
+    } else {
+        do {
+            length--;
+            if (str1[length] != str2[length])
+                return false;
+        } while (length>0);
+    }
+    return true;
 }
