@@ -24,11 +24,11 @@ __gshared IUtil* pIUtil = null;
 static if (__traits(compiles, EXT_ITIMER)) {
 __gshared ITimer* pITimer = null;
 UINT[4] TimerID =  0;
-DWORD TimerTickStart = 0;
-DWORD[4] TimerTickSys = 0;
+long TimerTickStart = 0;
+long[4] TimerTickSys = 0;
 static if (__traits(compiles, ITIMER_LOOP_CHECK)) {
 UINT TimerIDLoop = 0;
-DWORD TimerTickLoop = 0;
+long TimerTickLoop = 0;
 }
 }
 static if (__traits(compiles, EXT_ICINIFILE)) {
@@ -717,129 +717,130 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
             pIPlayer = getIPlayer(hash);
             if (!pIPlayer)
                 throw new ExceptionAPI(6);
+            static if (!__traits(compiles, EXT_IADMIN)) {
+                PlayerInfoList plList;
+                ushort totalPlayers = pIPlayer.m_get_str_to_player_list("*"w.ptr, &plList, null);
+                if (totalPlayers == 0)
+                    throw new ExceptionAPI(6);
 
-            PlayerInfoList plList;
-            ushort totalPlayers = pIPlayer.m_get_str_to_player_list("*"w.ptr, &plList, null);
-            if (totalPlayers == 0)
-                throw new ExceptionAPI(6);
+                PlayerInfo plITest, plITest2;
+                if (pIPlayer.m_get_m_index(2, &plITest, true))
+                    throw new ExceptionAPI(6);
+                if (pIPlayer.m_get_m_index(1, &plITest, true))
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_get_m_index(0, &plITest, true))
+                    throw new ExceptionAPI(6);
+                if (pIPlayer.m_get_id(200, &plITest2))
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_get_id(plITest.plR.PlayerIndex, &plITest2))
+                    throw new ExceptionAPI(6);
+                if (!(plITest.mS == plITest2.mS && plITest.plEx == plITest2.plEx && plITest.plS == plITest2.plS && plITest.plR == plITest2.plR))
+                    throw new ExceptionAPI(6);
 
-            PlayerInfo plITest, plITest2;
-            if (pIPlayer.m_get_m_index(2, &plITest, true))
-                throw new ExceptionAPI(6);
-            if (pIPlayer.m_get_m_index(1, &plITest, true))
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_get_m_index(0, &plITest, true))
-                throw new ExceptionAPI(6);
-            if (pIPlayer.m_get_id(200, &plITest2))
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_get_id(plITest.plR.PlayerIndex, &plITest2))
-                throw new ExceptionAPI(6);
-            if (!(plITest.mS == plITest2.mS && plITest.plEx == plITest2.plEx && plITest.plS == plITest2.plS && plITest.plR == plITest2.plR))
-                throw new ExceptionAPI(6);
+                s_biped* plBiped = cast(s_biped*)pIObject.m_get_address(plITest.plS.CurrentBiped);
+                if (!plBiped)
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_get_ident(plBiped.PlayerOwner,&plITest2))
+                    throw new ExceptionAPI(6);
 
-            s_biped* plBiped = cast(s_biped*)pIObject.m_get_address(plITest.plS.CurrentBiped);
-            if (!plBiped)
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_get_ident(plBiped.PlayerOwner,&plITest2))
-                throw new ExceptionAPI(6);
+                if (pIPlayer.m_get_by_unique_id(600, &plITest2))
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_get_by_unique_id(plITest.mS.UniqueID, &plITest2))
+                    throw new ExceptionAPI(6);
+                if (!(plITest.mS == plITest2.mS && plITest.plEx == plITest2.plEx && plITest.plS == plITest2.plS && plITest.plR == plITest2.plR))
+                    throw new ExceptionAPI(6);
+                retCode = pIPlayer.m_get_id_full_name(plITest.plR.PlayerName.ptr);
+                if (!retCode)
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_get_full_name_id(retCode, testStrW.ptr))
+                    throw new ExceptionAPI(6);
+                retCode = pIPlayer.m_get_id_ip_address(plITest.plEx.IP_Address.ptr);
+                if (!retCode)
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_get_ip_address_id(retCode, testStrW.ptr))
+                    throw new ExceptionAPI(6);
+                retCode = pIPlayer.m_get_id_port(plITest.plEx.IP_Port.ptr);
+                if (!retCode)
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_get_port_id(retCode, testStrW.ptr))
+                    throw new ExceptionAPI(6);
 
-            if (pIPlayer.m_get_by_unique_id(600, &plITest2))
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_get_by_unique_id(plITest.mS.UniqueID, &plITest2))
-                throw new ExceptionAPI(6);
-            if (!(plITest.mS == plITest2.mS && plITest.plEx == plITest2.plEx && plITest.plS == plITest2.plS && plITest.plR == plITest2.plR))
-                throw new ExceptionAPI(6);
-            retCode = pIPlayer.m_get_id_full_name(plITest.plR.PlayerName.ptr);
-            if (!retCode)
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_get_full_name_id(retCode, testStrW.ptr))
-                throw new ExceptionAPI(6);
-            retCode = pIPlayer.m_get_id_ip_address(plITest.plEx.IP_Address.ptr);
-            if (!retCode)
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_get_ip_address_id(retCode, testStrW.ptr))
-                throw new ExceptionAPI(6);
-            retCode = pIPlayer.m_get_id_port(plITest.plEx.IP_Port.ptr);
-            if (!retCode)
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_get_port_id(retCode, testStrW.ptr))
-                throw new ExceptionAPI(6);
+                if (pIPlayer.m_update(&plINull))
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_update(&plITest))
+                    throw new ExceptionAPI(6);
 
-            if (pIPlayer.m_update(&plINull))
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_update(&plITest))
-                throw new ExceptionAPI(6);
+                VARIANT[1] argVariant;
+                VARIANTwstr(&argVariant[0], plITest.plR.PlayerName.ptr);
+                if (!pIPlayer.m_send_custom_message(MSG_FORMAT.MF_BLANK, MSG_PROTOCOL.MP_CHAT, &plITest, "Simple blank prefix message for {0:s}"w.ptr, 1, argVariant.ptr))
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_send_custom_message(MSG_FORMAT.MF_SERVER, MSG_PROTOCOL.MP_CHAT, &plITest, "Simple server prefix message for {0:s}"w.ptr, 1, argVariant.ptr))
+                    throw new ExceptionAPI(6);
 
-            VARIANT[1] argVariant;
-            VARIANTwstr(&argVariant[0], plITest.plR.PlayerName.ptr);
-            if (!pIPlayer.m_send_custom_message(MSG_FORMAT.MF_BLANK, MSG_PROTOCOL.MP_CHAT, &plITest, "Simple blank prefix message for {0:s}"w.ptr, 1, argVariant.ptr))
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_send_custom_message(MSG_FORMAT.MF_SERVER, MSG_PROTOCOL.MP_CHAT, &plITest, "Simple server prefix message for {0:s}"w.ptr, 1, argVariant.ptr))
-                throw new ExceptionAPI(6);
+                if (!pIPlayer.m_send_custom_message_broadcast(MSG_FORMAT.MF_BLANK, "Simple blank prefix message for everyone"w.ptr, 0, null))
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_send_custom_message_broadcast(MSG_FORMAT.MF_SERVER, "Simple server prefix message for everyone"w.ptr, 0, null))
+                    throw new ExceptionAPI(6);
 
-            if (!pIPlayer.m_send_custom_message_broadcast(MSG_FORMAT.MF_BLANK, "Simple blank prefix message for everyone"w.ptr, 0, null))
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_send_custom_message_broadcast(MSG_FORMAT.MF_SERVER, "Simple server prefix message for everyone"w.ptr, 0, null))
-                throw new ExceptionAPI(6);
+                //m_apply_camo test only required biped data to verify data is set to camoflauge.
+                if (plBiped.isInvisible & 0x10)
+                    throw new ExceptionAPI(6);
+                pIPlayer.m_apply_camo(&plITest, 10);
+                if (!(plBiped.isInvisible & 0x10))
+                    throw new ExceptionAPI(6);
 
-            //m_apply_camo test only required biped data to verify data is set to camoflauge.
-            if (plBiped.isInvisible & 0x10)
-                throw new ExceptionAPI(6);
-            pIPlayer.m_apply_camo(&plITest, 10);
-            if (!(plBiped.isInvisible & 0x10))
-                throw new ExceptionAPI(6);
+                e_color_team_index oldTeam = plITest.plR.Team;
+                pIPlayer.m_change_team(&plITest, oldTeam==e_color_team_index.RED?e_color_team_index.BLUE:e_color_team_index.RED, 1);
+                if (plITest.plR.Team == oldTeam)
+                    throw new ExceptionAPI(6);
 
-            e_color_team_index oldTeam = plITest.plR.Team;
-            pIPlayer.m_change_team(&plITest, oldTeam==e_color_team_index.RED?e_color_team_index.BLUE:e_color_team_index.RED, 1);
-            if (plITest.plR.Team == oldTeam)
-                throw new ExceptionAPI(6);
+                tm gmtm;
+                time_t localTime = time(null);
+                gmtm = *gmtime(&localTime);
+                gmtm.tm_min += 5;
+                if (!pIPlayer.m_ban_player(plITest.plEx, &gmtm))
+                    throw new ExceptionAPI(6);
+                UINT banID, banID2;
+                //Test CD hash key (un)ban verification
+                if ((banID = pIPlayer.m_ban_CD_key_get_id(plITest.plEx.CDHashW.ptr)) == 0)
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_unban_id(banID))
+                    throw new ExceptionAPI(6);
+                //TODO: Does not validate if CD hash is valid first before ban
+                if (pIPlayer.m_ban_CD_key(plITest.plEx.CDHashW.ptr, &gmtm) != 1)
+                    throw new ExceptionAPI(6);
+                if ((banID2 = pIPlayer.m_ban_CD_key_get_id(plITest.plEx.CDHashW.ptr)) == 0)
+                    throw new ExceptionAPI(6);
+                if (banID != banID2)
+                    throw new ExceptionAPI(6);
+                //Test IP Address (un)ban verification
+                if ((banID = pIPlayer.m_ban_ip_get_id(plITest.plEx.IP_Address.ptr)) == 0)
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_unban_id(banID))
+                    throw new ExceptionAPI(6);
+                //TODO: Does not validate if IP Address is valid first before ban
+                if (pIPlayer.m_ban_ip(plITest.plEx.IP_Address.ptr, &gmtm) != 1)
+                    throw new ExceptionAPI(6);
+                if ((banID2 = pIPlayer.m_ban_ip_get_id(plITest.plEx.IP_Address.ptr)) == 0)
+                    throw new ExceptionAPI(6);
+                if (banID != banID2)
+                    throw new ExceptionAPI(6);
 
-            tm gmtm;
-            time_t localTime = time(null);
-            gmtm = *gmtime(&localTime);
-            gmtm.tm_min += 5;
-            if (!pIPlayer.m_ban_player(plITest.plEx, &gmtm))
-                throw new ExceptionAPI(6);
-            UINT banID, banID2;
-            //Test CD hash key (un)ban verification
-            if ((banID = pIPlayer.m_ban_CD_key_get_id(plITest.plEx.CDHashW.ptr)) == 0)
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_unban_id(banID))
-                throw new ExceptionAPI(6);
-            //TODO: Does not validate if CD hash is valid first before ban
-            if (pIPlayer.m_ban_CD_key(plITest.plEx.CDHashW.ptr, &gmtm) != 1)
-                throw new ExceptionAPI(6);
-            if ((banID2 = pIPlayer.m_ban_CD_key_get_id(plITest.plEx.CDHashW.ptr)) == 0)
-                throw new ExceptionAPI(6);
-            if (banID != banID2)
-                throw new ExceptionAPI(6);
-            //Test IP Address (un)ban verification
-            if ((banID = pIPlayer.m_ban_ip_get_id(plITest.plEx.IP_Address.ptr)) == 0)
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_unban_id(banID))
-                throw new ExceptionAPI(6);
-            //TODO: Does not validate if IP Address is valid first before ban
-            if (pIPlayer.m_ban_ip(plITest.plEx.IP_Address.ptr, &gmtm) != 1)
-                throw new ExceptionAPI(6);
-            if ((banID2 = pIPlayer.m_ban_ip_get_id(plITest.plEx.IP_Address.ptr)) == 0)
-                throw new ExceptionAPI(6);
-            if (banID != banID2)
-                throw new ExceptionAPI(6);
+                IN_ADDR ipAddr;
+                if (!pIPlayer.m_get_ip(plITest.mS, &ipAddr))
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_get_port(plITest.mS, &totalPlayers))
+                    throw new ExceptionAPI(6);
+                if (!pIPlayer.m_get_CD_hash(plITest.mS, cdHashKeyA.ptr))
+                    throw new ExceptionAPI(6);
 
-            IN_ADDR ipAddr;
-            if (!pIPlayer.m_get_ip(plITest.mS, &ipAddr))
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_get_port(plITest.mS, &totalPlayers))
-                throw new ExceptionAPI(6);
-            if (!pIPlayer.m_get_CD_hash(plITest.mS, cdHashKeyA.ptr))
-                throw new ExceptionAPI(6);
-
-            //Uncomment this part if need to verify function return correctly with/out an admin player.
-            //if (!pIPlayer.m_is_admin(plITest.mS.machineIndex))
-            //throw new ExceptionAPI(6);
+                //Uncomment this part if need to verify function return correctly with/out an admin player.
+                //if (!pIPlayer.m_is_admin(plITest.mS.machineIndex))
+                //throw new ExceptionAPI(6);
 
 
-            MessageBoxA(null, "IPlayer API has passed unit test.", "PASSED - IPlayer", MB_OK | MB_ICONINFORMATION);
+                MessageBoxA(null, "IPlayer API has passed unit test.", "PASSED - IPlayer", MB_OK | MB_ICONINFORMATION);
+            }
         }
         static if (__traits(compiles, EXT_IADMIN)) {
             PlayerInfo plIMockUp;
@@ -1064,7 +1065,7 @@ export extern(C) EAO_RETURN EXTOnEAOLoad(uint hash) {
             pITimer.m_delete(hash, TimerID[1]);
             static if (__traits(compiles, ITIMER_LOOP_CHECK)) {
                 TimerIDLoop = pITimer.m_add(hash, null, 30);
-                TimerTickLoop = GetTickCount();
+                TimerTickLoop = milliseconds_now();
             }
         }
     } catch(ExceptionAPI e) {
@@ -1082,7 +1083,7 @@ static if (__traits(compiles, EXT_HKTIMER)) {
 export extern(C) bool EXTOnTimerExecute(uint id, uint count) {
     static if (__traits(compiles, ITIMER_LOOP_CHECK)) {
     if (TimerIDLoop == id) {
-        DWORD tempTimerTickLoop = GetTickCount();
+        long tempTimerTickLoop = milliseconds_now();
         VARIANT var = { 0 };
         VARIANTulong(&var, tempTimerTickLoop - TimerTickLoop);
         TimerTickLoop = tempTimerTickLoop;
@@ -1092,7 +1093,7 @@ export extern(C) bool EXTOnTimerExecute(uint id, uint count) {
     }
     if (TimerID[0] == id) {
         if (!TimerTickStart) {
-            TimerTickStart = GetTickCount();
+            TimerTickStart = milliseconds_now();
             TimerID[0] = pITimer.m_add(EAOhashID, null, 150); //5 seconds
             if (!TimerID[0])
                 goto failedITimer;
@@ -1100,8 +1101,8 @@ export extern(C) bool EXTOnTimerExecute(uint id, uint count) {
             if (!TimerID[2])
                 goto failedITimer;
         } else {
-            TimerTickSys[0] = GetTickCount();
-            DWORD tmpTimerCheck = TimerTickSys[0] - TimerTickStart;
+            TimerTickSys[0] = milliseconds_now();
+            long tmpTimerCheck = TimerTickSys[0] - TimerTickStart;
             if (!(4500 < tmpTimerCheck && tmpTimerCheck < 5033))
                 goto failedITimer;
             if (TimerTickSys[1] != 0)
@@ -1115,14 +1116,14 @@ export extern(C) bool EXTOnTimerExecute(uint id, uint count) {
             MessageBoxA(NULL, "ITimer API has passed unit test.", "PASSED - ITimer", MB_OK | MB_ICONINFORMATION);
         }
     } else if (TimerID[1] == id) {
-        TimerTickSys[1] = GetTickCount();
+        TimerTickSys[1] = milliseconds_now();
     } else if (TimerID[2] == id) {
-        TimerTickSys[2] = GetTickCount();
+        TimerTickSys[2] = milliseconds_now();
         TimerID[3] = pITimer.m_add(EAOhashID, null, 60); //2 seconds
         if (!TimerID[3])
             goto failedITimer;
     } else if (TimerID[3] == id) {
-        TimerTickSys[3] = GetTickCount();
+        TimerTickSys[3] = milliseconds_now();
     } else {
     failedITimer:
         MessageBoxA(NULL, "ITimer API has failed unit test.", "ERROR - ITimer", MB_OK | MB_ICONERROR);
@@ -1156,4 +1157,16 @@ bool compareString(const wchar[] str1, const wchar[] str2, uint length) {
         } while (length>0);
     }
     return true;
+}
+
+BOOL s_use_qpc = FALSE;
+LARGE_INTEGER s_frequency;
+long milliseconds_now() {
+    if (s_use_qpc) {
+        LARGE_INTEGER now;
+        QueryPerformanceCounter(&now);
+        return (1000L * now.QuadPart) / s_frequency.QuadPart;
+    } else {
+        return GetTickCount();
+    }
 }
