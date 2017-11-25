@@ -2,28 +2,34 @@ module global;
 
 import Add_on_API;
 
-//enum EXT_IHALOENGINE;
-//enum EXT_IOBJECT;
-//enum EXT_IPLAYER;
-//enum EXT_IADMIN;
+// List of API support
+
+// List of EXTs API support for all modes
+
+//enum EXT_IUTIL;
 //enum EXT_ICOMMAND;
-
-//enum EXT_IDATABASE;           //Not included in this UnitTest.
-//enum EXT_IDATABASESTATEMENT;  //Not included in this UnitTest.
-//enum EXT_HKDATABASE;          //Not included in this UnitTest.
-
 //enum EXT_ICINIFILE;
-
 //enum EXT_ITIMER;
 //enum EXT_HKTIMER;
 
-//enum EXT_IUTIL;
+// List of EXTs API support for mp mode only
+
+//enum EXT_IHALOENGINE;
+//enum EXT_IOBJECT;        // Require EXT_IUTIL
+//enum EXT_IPLAYER;        // Require EXT_IOBJECT; if define EXT_IADMIN, EXT_IPLAYER test will not process
+//enum EXT_IADMIN;         // Require EXT_IUTIL
+
+// Not included in this UnitTest.
+//enum EXT_IDATABASE;
+//enum EXT_IDATABASESTATEMENT;
+//enum EXT_HKDATABASE;
 
 //Future API support
-//enum EXT_INETWORK;
-//enum EXT_ISOUND;
-//enum EXT_IDIRECTX9;
-//enum EXT_HKEXTERNAL;
+
+//enum EXT_INETWORK;             // Will require mp mode test and possible client?
+//enum EXT_ISOUND;               // Require client side test only.
+//enum EXT_IDIRECTX9;            // Require client side test only
+//enum EXT_HKEXTERNAL;           // TBD
 
 
 addon_info EXTPluginInfo = { "UnitTestD", "1.0.0.0",
@@ -37,7 +43,7 @@ sectors: {"unit_test",
     "test[unit]"} };
 
 /*
- * Verification list as of 0.5.3.3
+ * Verification list as of 0.5.3.4
  *
  * EXT_IHALOENGINE          - Passed (except a few functions are not included in test.)
  * EXT_IOBJECT              - Passed (except a few functions are not included in test.)
